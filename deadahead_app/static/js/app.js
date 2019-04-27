@@ -1,5 +1,6 @@
-function post_calc() {
+function calc_stats() {
     console.log("post_calc is working!") // sanity check
+    $("#statsPlaceholder").empty();
     $.ajax({
         url : "calc_stats/", // the endpoint
         type : "POST", // http method
@@ -17,6 +18,23 @@ function post_calc() {
             console.log("success"); // another sanity check
             $('#var_1_input').val(json['var_1']);
             $('#var_2_input').val(json['var_2']);
+            var_1_summary = null;
+            var_2_summary = null;
+            if(json['var_1_summary'] != null) {
+                var_1_summary = JSON.parse(json['var_1_summary']);
+            }
+            if(json['var_1_summary'] != null) {
+                var_2_summary = JSON.parse(json['var_2_summary']);
+            }         
+            if(var_1_summary != null && var_2_summary != null) {
+                var templateResult = Sqrl.Render(stat_template, {
+                    statHeaders: var_1_summary["index"],
+                    stat_var_1: var_1_summary["data"],
+                    stat_var_2: var_2_summary["data"]
+                });
+                $("#statsPlaceholder").html(templateResult)
+                            
+            }   
         },
 
         // handle a non-successful response
@@ -97,3 +115,46 @@ $(function() {
     });
 
 });
+
+var stat_template = `
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Variant 1</th>
+            <th scope="col">Variant 2</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{each(options.statHeaders)}}
+        <tr>
+            {{js(options.val_1 = options.stat_var_1[@index])/}}
+            {{js(options.val_2 = options.stat_var_2[@index])/}}
+
+            <th scope="row">{{@this}}</th>
+            <td>{{val_1}}</td>
+            <td>{{val_2}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>       
+    
+`
+
+// var templateResult = Sqrl.Render(myTemplate, {
+//     fav: "Squirrelly", cake: "Chocolate"
+// })
+
+// console.log(templateResult)
+
+// {{each(stat_headers)}}
+// {{@this}}
+// {{/each}}
+
+// {{each(stat_var_1)}}
+// {{@this}}
+// {{/each}} 
+
+// {{each(stat_var_2)}}
+// {{@this}}
+// {{/each}}

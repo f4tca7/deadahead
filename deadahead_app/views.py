@@ -8,6 +8,8 @@ import json
 from .models import ABTestModel
 from .forms import ABTestForm
 from .utils import split_and_convert
+from .utils import calc_summary
+
 
 
 def index(request):
@@ -33,9 +35,9 @@ def abtesting(request):
         else:
             return render(request, 'deadahead_app/abtesting.html', {'form': form, 'error_message': "You didn't select a choice.",})
     else:
-        var_1 = request.GET.get('var_1', '')
+        var_1 = request.GET.get('var_1', '1.1,.6,6.8')
         num_permutations = 10000
-        var_2 = request.GET.get('var_2', '')
+        var_2 = request.GET.get('var_2', '1,2.3,3')
         form = ABTestForm(initial={'var_1_input': var_1, 'var_2_input': var_2, 'num_permutations': num_permutations, })
     return render(request, 'deadahead_app/abtesting.html', {'form': form})
 
@@ -49,11 +51,16 @@ def calc_stats(request):
             num_permutations = abtest_request.num_permutations
             var_1_split = split_and_convert(var_1)
             var_2_split = split_and_convert(var_2)
+
+            var_1_summary = calc_summary(var_1_split)
+            var_2_summary = calc_summary(var_2_split)
             response_data = {}
             response_data['result'] = 'Create post successful!'
             response_data['var_1'] = ', '.join(str(x) for x in var_1_split)
             response_data['var_2'] = ', '.join(str(x) for x in var_2_split)
-            
+            response_data['var_1_summary'] = var_1_summary.to_json(orient='split')
+            response_data['var_2_summary'] = var_2_summary.to_json(orient='split')
+                        
             print(var_1_split)
             return HttpResponse(
                 json.dumps(response_data),
