@@ -36,29 +36,24 @@
     </head>
     <body>
         {# Navigation Menu #}
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        
+            <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <div class="navbar-inner">
-                    {% sitetree_menu from "maintree" include "trunk,topmenu" template "sitetree/menu_bootstrap4.html" %}
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <div class="navbar-inner">
+                        {% sitetree_menu from "maintree" include "trunk,topmenu" template "sitetree/menu_bootstrap4.html" %}
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        
         {# The Document Body #}
-        <div id="site-wrapper">
+        <div id="site-wrapper" class="spacer-20">
             {% block content %}
                 if you see this, something is wrong!
             {% endblock content %}
-        </div>
-        {# The Footer #}
-        <div class="footer">
-            <div class="container">
-                <p>Copyright CRM Easy</p>
-            </div>
         </div>
     </body>    
     {# Set of blocks that can be used to display JavaScript files #}
