@@ -1,7 +1,7 @@
 {% extends 'deadahead_app/base.html' %}
 {% block title %}A/B Testing{% endblock title %}
 {% block nav-style %}mkt-nav{% endblock nav-style %}
-
+{% load bootstrap4 %}
 {% block content %}  
 
     {# Hero Section #}
@@ -10,13 +10,15 @@
             <div class="row">
                 <h1 class="col">A/B Testing</h1>
             </div>
+
             <div class="row">
                 <div class="col">
-                    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
                     <form method="post">
                         {% csrf_token %}
-                        {{ form.as_p }}
-                        <input type="submit" value="Calculate">
+                        {% bootstrap_form form %}
+                        {% buttons %}
+                            <button type="submit" class="btn btn-success">Calculate</button> 
+                        {% endbuttons %}
                     </form>
                 </div>
             </div>

@@ -30,6 +30,9 @@ def abtesting(request):
             base_url = reverse('deadahead_app:abtesting')
             url = '{}?{}'.format(base_url, urlencode(query_kwargs))
             return HttpResponseRedirect(url)
+        else:
+
+            return render(request, 'deadahead_app/abtesting.html', {'form': form, 'error_message': "You didn't select a choice.",})
     else:
         var_1 = request.GET.get('var_1', '')
         num_permutations = request.GET.get('num_permutations', '')

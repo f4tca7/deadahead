@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'bootstrap4',
     'sitetree',
     'deadahead_app.apps.DeadaheadAppConfig',
     'django.contrib.admin',
