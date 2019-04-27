@@ -3,8 +3,6 @@
 {% block nav-style %}mkt-nav{% endblock nav-style %}
 {% load bootstrap4 %}
 {% block content %}  
-
-    {# Hero Section #}
     <div class="mkt-s1">
         <div class="mkt-s1-body container ">
             <div class="row">
@@ -13,18 +11,16 @@
 
             <div class="row">
                 <div class="col">
-                    <form method="post">
+                    <form action="/create_post/" method="post" id="post-form">
                         {% csrf_token %}
                         {% bootstrap_form form %}
                         {% buttons %}
                             <button type="submit" class="btn btn-success">Calculate</button> 
                         {% endbuttons %}
+                        <div id="results"></div> <!-- errors go here -->
                     </form>
                 </div>
             </div>
         </div>
     </div>  
-
-
-
 {% endblock content %}
