@@ -54,11 +54,11 @@ function calc_stats() {
 };
 
 // Submit post on submit
-$('#post-form').on('submit', function(event){
-    event.preventDefault();
-    console.log("form submitted!")  // sanity check
-    post_calc();
-});
+// $('#post-form').on('submit', function(event){
+//     event.preventDefault();
+//     console.log("form submitted!")  // sanity check
+//     post_calc();
+// });
 
 $(function() {
 
