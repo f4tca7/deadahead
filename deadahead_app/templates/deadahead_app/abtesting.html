@@ -19,13 +19,14 @@
                         {% bootstrap_form form %}
                         {% buttons %}
                             {% comment %} <button type="button" class="btn btn-success" onclick="calc_stats()">Calculate Summary</button> {% endcomment %}
-                            <button type="submit" class="btn btn-success" onclick="">Go</button>
+                            <button type="button" class="btn btn-success" onclick="calc_stats()">Go</button>
                         {% endbuttons %}
                         <div id="results"></div> <!-- errors go here -->
                     </form>
                 </div>
-           
-                <div class="col-6">
+                <div class="col-6" id="statsPlaceholder">
+                </div>
+                {% comment %} <div class="col-6">
                     <table class="table">
                         <thead>
                             <tr>
@@ -44,7 +45,7 @@
                             {% endfor %}
                         </tbody>
                     </table>                      
-                </div>  
+                </div>   {% endcomment %}
             </div>
             <div class="row">
                 <div class="col-8">

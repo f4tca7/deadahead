@@ -23,7 +23,7 @@ function calc_stats() {
             if(json['var_1_summary'] != null) {
                 var_1_summary = JSON.parse(json['var_1_summary']);
             }
-            if(json['var_1_summary'] != null) {
+            if(json['var_2_summary'] != null) {
                 var_2_summary = JSON.parse(json['var_2_summary']);
             }         
             if(var_1_summary != null && var_2_summary != null) {
