@@ -1,6 +1,11 @@
 function calc_stats() {
-    console.log("post_calc is working!") // sanity check
+
     $("#statsPlaceholder").empty();
+    ttest_equal_var = false;
+    if ($('#id_ttest_equal_var').is(":checked"))
+    {
+        ttest_equal_var = true;
+    }
     $.ajax({
         url : "calc_stats/", // the endpoint
         type : "POST", // http method
@@ -8,14 +13,13 @@ function calc_stats() {
             var_1_input : $('#var_1_input').val(),
             var_2_input : $('#var_2_input').val(),
             num_permutations : $('#num_permutations').val(),
+            ttest_equal_var:  ttest_equal_var
         }, // data sent with the post request
 
         // handle a successful response
         success : function(json) {
             $('.error-label').remove();
             // $('#post-text').val(''); // remove the value from the input
-            console.log(json); // log the returned json to the console
-            console.log("success"); // another sanity check
             $('#var_1_input').val(json['var_1']);
             $('#var_2_input').val(json['var_2']);
             var_1_summary = null;
@@ -25,16 +29,39 @@ function calc_stats() {
             }
             if(json['var_2_summary'] != null) {
                 var_2_summary = JSON.parse(json['var_2_summary']);
+            }  
+            equal_var = 'No';
+            if(json['equal_var'] != null) {
+                if(json['equal_var'] == true){
+                    equal_var = 'Yes';
+                } 
             }         
+            
             if(var_1_summary != null && var_2_summary != null) {
                 var templateResult = Sqrl.Render(stat_template, {
                     statHeaders: var_1_summary["index"],
                     stat_var_1: var_1_summary["data"],
                     stat_var_2: var_2_summary["data"]
                 });
-                $("#statsPlaceholder").html(templateResult)
-                            
+                $("#statsPlaceholder").html(templateResult);                            
             }   
+            if(json['hypo_p'] != null) {                
+                var templateResult_P = Sqrl.Render(p_template, {
+                    hypo_p: (json['hypo_p']).toFixed(5),
+                    num_perm: json['num_perm'],
+                    ttest_p: (json['ttest_p']).toFixed(5),
+                    equal_var: equal_var,
+                    chi_sq_p: (json['chi_sq_p']).toFixed(5),
+                }); 
+                $("#pPlaceholder").html(templateResult_P);                     
+            }
+            if(json['boxplot_img'] != null) {  
+                var templateResultImage = Sqrl.Render(boxblot_template, {
+                    image_data: json["boxplot_img"]
+                });
+                $("#boxplotPlaceholder").html(templateResultImage);  
+            }            
+
         },
 
         // handle a non-successful response
@@ -115,6 +142,43 @@ $(function() {
     });
 
 });
+var boxblot_template = `
+<div class="row">
+    <h4 class="col">Boxplot & Scatterplot</h4>
+</div>
+<div class="row">
+    <div class="col">
+        <img src="data:image/png;base64,{{image_data}}" class="img-fluid" />
+    </div>
+</div>
+`
+
+var p_template = `
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Test</th>
+            <th scope="col">p-value</th>
+        </tr>
+    </thead>
+    <tbody>
+
+    <tr>
+        <td>Bootstrapped hypothesis test with {{num_perm}} permutations</th>
+        <td>p = {{hypo_p}}</td>
+    </tr>
+    <tr>
+        <td>Welch T-Test, two-sided; Equal variance: {{equal_var}}</th>
+        <td>p = {{ttest_p}}</td>
+    </tr>
+    <tr>
+        <td>Chi-Squared (0 Delta degrees of freedom)</th>
+        <td>p = {{chi_sq_p}}</td>
+    </tr>    
+</tbody>
+
+`
+
 
 var stat_template = `
 <table class="table">
@@ -137,8 +201,7 @@ var stat_template = `
         </tr>
         {{/each}}
     </tbody>
-</table>       
-    
+</table>
 `
 
 // var templateResult = Sqrl.Render(myTemplate, {

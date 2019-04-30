@@ -5,7 +5,7 @@ from .models import ABTestModel
 class ABTestForm(ModelForm):
     class Meta:
         model = ABTestModel
-        fields = ('var_1_input', 'var_2_input', 'num_permutations',)
+        fields = ('var_1_input', 'var_2_input', 'num_permutations','ttest_equal_var',)
         widgets = {
             'var_1_input': Textarea(attrs={'cols': 80, 'rows': 5, 'id': 'var_1_input'}),
             'var_2_input': Textarea(attrs={'cols': 80, 'rows': 5, 'id': 'var_2_input'}),
@@ -14,5 +14,6 @@ class ABTestForm(ModelForm):
         labels = {
             "var_1_input": "Variant 1 Data",
             "var_2_input": "Variant 2 Data",
-            "num_permutations": "Number of Permutations",
+            "num_permutations": "Number of permutations for bootstrap hypothesis test",
+            "ttest_equal_var": "For t-test: Equal variance?"
         }
