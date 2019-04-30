@@ -5,15 +5,15 @@
 {% block content %}  
     <div class="mkt-s1">
         <div class="mkt-s1-body container ">
-            <div class="row">
-                <h2 class="col">A/B Testing</h1>
-            </div>
-            <div class="row">
-                <h4 class="col-6">Data</h1>
-                <h4 class="col-6">Summary Statistics</h1>
-            </div>                  
-            <div class="row">
-                <div class="col-6">
+            <div class="jumbotron row">
+                <div class="col">
+                    <h1 class="display-4">A/B Testing Tools</h1>
+                    <p class="lead">A couple of tools to do basic EDA and calculate several p-values on two datasets.</p>
+                    <hr class="my-4">
+                    <p>Just copy / paste data into the textareas. Separators accepted are: Comma, Semicolon, Space and Linebreak</p>
+
+                </div>
+                <div class="col">   
                     <form action="/abtesting/calc_stats/" method="post" id="post-form">
                         {% csrf_token %}
                         {% bootstrap_form form %}
@@ -24,35 +24,19 @@
                         <div id="results"></div> <!-- errors go here -->
                     </form>
                 </div>
-                <div class="col-6" id="statsPlaceholder">
-                </div>
-                {% comment %} <div class="col-6">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Variant 1</th>
-                                <th scope="col">Variant 2</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for item in stats_summary %}
-                            <tr>
-                                <th scope="row">{{item.0}}</th>
-                                <td>{{item.1.0}}</td>
-                                <td>{{item.2.0}}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>                      
-                </div>   {% endcomment %}
-            </div>
+            </div>     
+
+
+
             <div class="row">
-                <div class="col-8">
+                <h4 class="col-6">Summary Statistics</h4>
+                <h4 class="col-6">p-values</h4>
+            </div>                  
+            <div class="row">     
+                <div class="col-6" id="statsPlaceholder">        
                 </div>
-            </div>
-            <div class="row">
-                          
+                <div class="col-6" id="statsPlaceholder">        
+                </div>                
             </div>
         </div>
     </div>  

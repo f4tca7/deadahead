@@ -37,8 +37,8 @@
     </head>
     <body>
         {# Navigation Menu #}
-        
-            <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+        <div class="container">
+                   <nav class="navbar navbar-expand-lg navbar-light bg-white">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -48,10 +48,12 @@
                         {% sitetree_menu from "maintree" include "trunk,topmenu" template "sitetree/menu_bootstrap4.html" %}
                     </div>
                 </div>
-            </nav>
+            </nav>    
+</div>
         
         {# The Document Body #}
-        <div id="site-wrapper" class="spacer-20">
+        <div id="site-wrapper">
+     
             {% block content %}
                 if you see this, something is wrong!
             {% endblock content %}

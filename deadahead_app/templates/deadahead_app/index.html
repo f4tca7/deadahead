@@ -1,24 +1,39 @@
+
 {% extends 'deadahead_app/base.html' %}
 {% block title %}Home{% endblock title %}
 {% block nav-style %}mkt-nav{% endblock nav-style %}
-
+{% load static %}
 {% block content %}  
 
 
 
     {# Main Section #}
     <div class="container">
-        <div class="row">
-            <div class="col">
-                <h1>A/B Testing</h1>
+        <div class="jumbotron row">
+            <div class="col-6">
+                <h1 class="display-4">Hi, I'm <b>Toni Schmidt</b></h1>
+                <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+                <hr class="my-4">
+                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                <p class="lead">
+                    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+                </p>
+            </div>
+            <div class="col-6">   
+                <img src="{% static "img/pic_toni_schmidt.jpg" %}" alt="Hi, I'm Toni" class="img-fluid"> 
             </div>
         </div>
         <div class="row">
             <div class="col">
+                <h1>Hi, I'm <b>Toni Schmidt</b></h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
             One of three columns
             </div>
-            <div class="col">
-            One of three columns
+            <div class="col-8">
+            <img src="{% static "img/pic_toni_schmidt.jpg" %}" alt="Hi, I'm Toni">   
             </div>
             <div class="col">
             One of three columns

@@ -5,3 +5,8 @@
 .red-color{
     color: red;
 }
+
+.profile-pic {
+    width:430px; /* you can use % */
+    height: auto;    
+}
