@@ -25,7 +25,7 @@ def abtesting(request):
     var_1 = request.GET.get('var_1', '1.1,.6,6.8')
     var_2 = request.GET.get('var_2', '1,2.3,3')
     ttest_equal_var = request.GET.get('ttest_equal_var', 'true')
-    num_permutations = request.GET.get('num_permutations', '5000')
+    num_permutations = request.GET.get('num_permutations', '100')
     form = ABTestForm(initial={'var_1_input': var_1, 'var_2_input': var_2, 'num_permutations': num_permutations, 'ttest_equal_var': ttest_equal_var, })
     var_1_split = split_and_convert(var_1)
     var_2_split = split_and_convert(var_2)
