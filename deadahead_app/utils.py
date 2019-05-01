@@ -10,6 +10,9 @@ def chi_sq(data1, data2):
     return p_val
 
 def ttest(data1, data2, equal_var):
+
+    if (len(data1) < 2) | (len(data2) < 2) :
+        return -1
     t_stat, p_val = stats.ttest_ind(data1, data2, equal_var = equal_var)
     return p_val
 

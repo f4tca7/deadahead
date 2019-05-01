@@ -1,5 +1,8 @@
 function calc_stats() {
 
+    $("#boxplotPlaceholder").empty();
+    $("#histplotPlaceholder").empty();
+    $("#pPlaceholder").empty();
     $("#statsPlaceholder").empty();
     ttest_equal_var = false;
     if ($('#id_ttest_equal_var').is(":checked"))
@@ -55,13 +58,19 @@ function calc_stats() {
                 }); 
                 $("#pPlaceholder").html(templateResult_P);                     
             }
-            if(json['boxplot_img'] != null) {  
-                var templateResultImage = Sqrl.Render(boxblot_template, {
-                    image_data: json["boxplot_img"]
+            if(json['boxplot_img'] != null && json['boxplot_img'] != "") {  
+                var templateResultBoxplotImage = Sqrl.Render(boxplot_template, {
+                    image_data_boxplot: json["boxplot_img"]
                 });
-                $("#boxplotPlaceholder").html(templateResultImage);  
-            }            
+                $("#boxplotPlaceholder").html(templateResultBoxplotImage);  
+            }   
 
+            if(json['hist_img'] != null && json['hist_img'] != "") {  
+                var templateResultHistImage = Sqrl.Render(histplot_template, {
+                    image_data_histplot: json["hist_img"]
+                });
+                $("#histplotPlaceholder").html(templateResultHistImage);  
+            }  
         },
 
         // handle a non-successful response
@@ -142,82 +151,89 @@ $(function() {
     });
 
 });
-var boxblot_template = `
+
+var histplot_template = `
 <div class="row">
-    <h4 class="col">Boxplot & Scatterplot</h4>
+    <h4 class="col">Histogram & KDE</h4>
 </div>
 <div class="row">
     <div class="col">
-        <img src="data:image/png;base64,{{image_data}}" class="img-fluid" />
+        <img src="data:image/png;base64,{{image_data_histplot}}" class="img-fluid" />
+    </div>
+</div>
+`
+
+var boxplot_template = `
+<div class="row">
+    <h4 class="col">Boxplot & Swarmplot</h4>
+</div>
+<div class="row">
+    <div class="col">
+        <img src="data:image/png;base64,{{image_data_boxplot}}" class="img-fluid" />
     </div>
 </div>
 `
 
 var p_template = `
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Test</th>
-            <th scope="col">p-value</th>
-        </tr>
-    </thead>
-    <tbody>
+<div class="row">
+    <h4 class="col">p-Values</h4>
+</div>
+<div class="row">
+    <div class="col">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col" class="w-75">Test</th>
+                    <th scope="col" class="w-25">p-value</th>
+                </tr>
+            </thead>
+            <tbody>
 
-    <tr>
-        <td>Bootstrapped hypothesis test with {{num_perm}} permutations</th>
-        <td>p = {{hypo_p}}</td>
-    </tr>
-    <tr>
-        <td>Welch T-Test, two-sided; Equal variance: {{equal_var}}</th>
-        <td>p = {{ttest_p}}</td>
-    </tr>
-    <tr>
-        <td>Chi-Squared (0 Delta degrees of freedom)</th>
-        <td>p = {{chi_sq_p}}</td>
-    </tr>    
-</tbody>
-
+            <tr>
+                <td>Bootstrapped hypothesis test with {{num_perm}} permutations</th>
+                <td>p = {{hypo_p}}</td>
+            </tr>
+            <tr>
+                <td>Welch T-Test, two-sided, independent samples; Equal variance: {{equal_var}}</th>
+                <td>p = {{ttest_p}}</td>
+            </tr>
+            <tr>
+                <td>Chi-Squared (0 Delta degrees of freedom)</th>
+                <td>p = {{chi_sq_p}}</td>
+            </tr>    
+        </tbody>
+    </div>
+</div>
 `
 
 
 var stat_template = `
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Variant 1</th>
-            <th scope="col">Variant 2</th>
-        </tr>
-    </thead>
-    <tbody>
-        {{each(options.statHeaders)}}
-        <tr>
-            {{js(options.val_1 = options.stat_var_1[@index])/}}
-            {{js(options.val_2 = options.stat_var_2[@index])/}}
+<div class="row">
+    <h4 class="col">Summary Statistics</h4>
+</div>
+<div class="row">
+    <div class="col">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Variant 1</th>
+                    <th scope="col">Variant 2</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{each(options.statHeaders)}}
+                <tr>
+                    {{js(options.val_1 = options.stat_var_1[@index])/}}
+                    {{js(options.val_2 = options.stat_var_2[@index])/}}
 
-            <th scope="row">{{@this}}</th>
-            <td>{{val_1}}</td>
-            <td>{{val_2}}</td>
-        </tr>
-        {{/each}}
-    </tbody>
-</table>
+                    <th scope="row">{{@this}}</th>
+                    <td>{{val_1}}</td>
+                    <td>{{val_2}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>        
 `
-
-// var templateResult = Sqrl.Render(myTemplate, {
-//     fav: "Squirrelly", cake: "Chocolate"
-// })
-
-// console.log(templateResult)
-
-// {{each(stat_headers)}}
-// {{@this}}
-// {{/each}}
-
-// {{each(stat_var_1)}}
-// {{@this}}
-// {{/each}} 
-
-// {{each(stat_var_2)}}
-// {{@this}}
-// {{/each}}
