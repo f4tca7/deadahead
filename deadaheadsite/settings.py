@@ -27,7 +27,7 @@ SECRET_KEY = os.environ['APP_SECRET_KEY']
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 # Debug = True
 
-ALLOWED_HOSTS = ['172.104.51.8', 'deadahead.net','127.0.0.1']
+ALLOWED_HOSTS = ['172.104.51.8', 'tonischmidt.me','127.0.0.1']
 
 
 # Application definition
