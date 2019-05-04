@@ -9,8 +9,20 @@
                 <div class="col">
                     <h1 class="display-4">A/B Testing Tools</h1>
                     <p class="lead">A couple of tools to do basic EDA and calculate several p-values on two datasets.</p>
+                    <p class="lead">Just paste numeric data into the fields and hit "Go".</p>
                     <hr class="my-4">
-                    <p>Just copy / paste numeric data into the textareas and hit "Go". Separators accepted are: Comma, Semicolon, Space and Linebreak</p>
+                    <p>This tool does:</p>
+                    <p>
+                        <ul>
+                            <li>Plot a combined bloxpot and swarmplot of the provided data.</li>
+                            <li>Plot nicely comparable normed histograms and KDEs.</li>
+                            <li>Calculate summary statistics.</li>
+                            <li>Run a bootstrap hypothesis test with the specified number of permutations 
+                            (as in <a href="https://faculty.psy.ohio-state.edu/myung/personal/course/826/bootstrap_hypo.pdf" target="#">this document</a>).</li>
+                            <li>Run a Welch t-test using <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ttest_ind.html" target="#">scipy.stats.ttest_ind</a>.</li>
+                            <li>Run a Chi-Squared test using <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.chisquare.html" target="#">scipy.stats.chisquare</a>.</li>
+                        </ul>
+                    </p>
 
                 </div>
                 <div class="col">   
@@ -19,7 +31,8 @@
                         {% bootstrap_form form %}
                         {% buttons %}
                             {% comment %} <button type="button" class="btn btn-success" onclick="calc_stats()">Calculate Summary</button> {% endcomment %}
-                            <button type="button" class="btn btn-success" onclick="calc_stats()">Go</button>
+                            <button type="button" class="btn btn-success buttonload" onclick="calc_stats()" id="abtSubmitButton">Go</button>
+                            <button type="button" class="btn btn-success buttonload" style="display: none;" id="abtLoadingButton"><i class="fa fa-spinner fa-spin"></i></button>
                         {% endbuttons %}
                         <div id="results"></div> <!-- errors go here -->
                     </form>

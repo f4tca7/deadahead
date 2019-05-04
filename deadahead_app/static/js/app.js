@@ -1,5 +1,6 @@
 function calc_stats() {
-
+    $("#abtSubmitButton").hide();
+    $("#abtLoadingButton").show();
     $("#boxplotPlaceholder").empty();
     $("#histplotPlaceholder").empty();
     $("#pPlaceholder").empty();
@@ -21,6 +22,9 @@ function calc_stats() {
 
         // handle a successful response
         success : function(json) {
+            $("#abtLoadingButton").hide();
+            $("#abtSubmitButton").show();
+            
             $('.error-label').remove();
             // $('#post-text').val(''); // remove the value from the input
             $('#var_1_input').val(json['var_1']);
@@ -75,6 +79,8 @@ function calc_stats() {
 
         // handle a non-successful response
         error : function(xhr,errmsg,err) {
+            $("#abtLoadingButton").hide();
+            $("#abtSubmitButton").show();
             $('.error-label').remove();
             var tmpData = JSON.parse(xhr.responseText);
             var formattedJson = JSON.stringify(tmpData, null, '\t');

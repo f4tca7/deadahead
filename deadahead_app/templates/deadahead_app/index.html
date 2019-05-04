@@ -1,29 +1,73 @@
 
 {% extends 'deadahead_app/base.html' %}
-{% block title %}Home{% endblock title %}
+{% block title %}Me{% endblock title %}
 {% block nav-style %}mkt-nav{% endblock nav-style %}
 {% load static %}
 {% block content %}  
     {# Main Section #}
     <div class="container">
         <div class="jumbotron row">
-            <div class="col-6">
+                    <div class="col-sm-6 text-center">   
+                <img src="{% static "img/pic_toni_schmidt_circle.png" %}" alt="Hi, I'm Toni" class="img-fluid"> 
+            </div>
+            <div class="col-sm-6">
                 <h1 class="display-4">Hi, I'm <b>Toni Schmidt</b></h1>
-                <p class="lead">I'm a product manager with a rich technical background. Currently I work for <a href="https://trip.com/" target="#">Trip.com</a>, where I help grow and optimize our flight ticket booking product.</p>
+                <p class="lead">I'm a product manager with a rich technical background. I currently work for <a href="https://trip.com/" target="#">Trip.com</a>, where I help grow and optimize our flight ticket booking product.</p>
+                <p class="lead">I've got 10+ years professional experience in product management, team leadership and software engineering roles. I've built up strong industry knowledge in online travel and the automotive retail/after-sales sectors. </p>
+                <p class="lead">I'm based in Shanghai, China.</p>
                 <hr class="my-4">
-                <p>This site is a collection of tools I find helpful for everyday data analysis and content that helps me fulfill my product management role.</p>
+                <p>Apart from being my personal webiste, this site is a collection of tools I find helpful for everyday data analysis and content that helps me fulfill my product management role.</p>
+                <hr class="my-4">
+                <div class="row nav-social-icons">
+                    <div class="col">
+                        <a href="https://www.linkedin.com/in/tonischmidt/" target="#"><i class="fab fa-linkedin fa-2x mr-3"></i></a>
+                    
+                        <a href="https://github.com/f4tca7" target="#"><i class="fab fa-github fa-2x mr-3"></i></a>
+              
+                        <a href="https://www.instagram.com/tonismdt/" target="#"><i class="fab fa-instagram fa-2x"></i></a>
+                   
+                    </div></div>
+                <div class="row">
+                <div class="col">toni@tonischmidt.me</div></div>
             </div>
-            <div class="col-6">   
-                <img src="{% static "img/pic_toni_schmidt.jpg" %}" alt="Hi, I'm Toni" class="img-fluid"> 
-            </div>
+            
+
         </div>
     </div>
     <div class="container">
-    <div class="row">
-        <h4 class="col">Timeline</h4>
-    </div>
         <div class="row">
-            <div class="col-8">
+            <div class="col-sm-1"></div>
+            <div class="col">
+                <h4 class="">What I Do</h4>
+                <p>As a product manager I help bring concepts into reality, from their inception to delivery. 
+                I use my knowledge of the market, the product and the competition to define and prioritize backlog items, so the right product is delivered at the right time. 
+                By analyzing key metrics, like user tracking- and customer feedback data, I take data-centric decisions. 
+                By running experiments I make sure that business goals are met while providing the best possible user experience.</p>
+            </div>
+            <div class="col">
+                <h4 class="">How I Work</h4>
+                <p>Having coded for much of my life, abstracting complex problems into smaller parts comes natural to me. 
+                That allows me to take a business requirement and dissect it into its components, so that UX/UI, Development and Testing teams have all the info they need for execution.
+                At the same time, I use my solid background in Human-Computer Interaction to think in a user-centered way, balancing business requirements against user needs. </p>
+            </div>
+            <div class="col">
+                <h4 class="">Why I Do It</h4>
+                <p>My goal is bringing uncompromingly delightful experiences to my users. 
+                I want to go to sleep at night knowing that I've taken no shortcuts in delivering the best possible product.
+                I want to build products that I can recommend to family and friends with a perfect conscience, because I'm convinced it's the best result achievable.
+                </p>
+            </div>          
+            <div class="col-sm-1"></div>              
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <h4 class="col-sm-10">Timeline</h4>
+            <div class="col-sm-1"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-10">
                 <table class="table">
                     <thead> 
                     </thead>
@@ -34,7 +78,7 @@
                         </tr>
                         <tr>
                             <th scope="row">1986</th>
-                            <td>Forbidden to play in the sand because of fallout from Tschernobyl. Thanks parents for not letting me get radiated.</td>
+                            <td>Forbidden to play in the sand because of fallout from Chernobyl. Thanks parents for not letting me get radiated.</td>
                         </tr>
                         <tr>
                             <th scope="row">1990</th>
@@ -123,6 +167,7 @@
                     </tbody>
                 </table>
             </div>
+            <div class="col-sm-1"></div>
         </div>
     </div>
 {% endblock content %}
