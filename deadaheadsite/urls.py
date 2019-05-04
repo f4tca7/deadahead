@@ -23,6 +23,5 @@ urlpatterns = [
     path('', include('deadahead_app.urls')),
     path('admin/', admin.site.urls),
     url(r'^weblog/', include('zinnia.urls')),
-    url(r'^comments/', include('django_comments.urls')),
-    
+    url(r'^comments/', include('django_comments.urls')),    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

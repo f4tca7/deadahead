@@ -21,6 +21,10 @@ def index(request):
     context = {}
     return render(request, 'deadahead_app/index.html', context)
 
+def contact(request):
+    context = {}
+    return render(request, 'deadahead_app/contact.html', context)
+
 def abtesting(request):    
     var_1 = request.GET.get('var_1', '1.1,.6,6.8')
     var_2 = request.GET.get('var_2', '1,2.3,3')
@@ -99,10 +103,3 @@ def calc_stats(request):
             json.dumps({"nothing to see": "this isn't happening"}),
             content_type="application/json"
         )
-
-
-def box_swarm_plot(request):                
-    return HttpResponse(
-        json.dumps({"nothing to see": "this isn't happening"}),
-        content_type="application/json"
-    )    
