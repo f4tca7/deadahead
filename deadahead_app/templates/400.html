@@ -1,0 +1,24 @@
+{% extends 'deadahead_app/base.html' %}
+{% block title %}A/B Testing{% endblock title %}
+{% block nav-style %}mkt-nav{% endblock nav-style %}
+{% load bootstrap4 %}
+{% block content %}  
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="error-template">
+                <h2>
+                    400 Bad Request</h2>
+                <div class="error-details">
+                    Sorry, but the request was malformed and the site could not be loaded.
+                </div>
+                <div class="row">&nbsp;</div>
+                <div class="error-actions">
+                    <a href="/" class="btn btn-outline-dark">
+                        Return To Home </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
