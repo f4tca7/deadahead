@@ -17,6 +17,9 @@ from .utils import chi_sq
 from .plot_helpers import plot_box_swarm
 from .plot_helpers import plot_hist
 
+DEFAULT_VAR_A = [13.71, 14.57, 12.07, 14.41, 15.11, 14.5, 14.21, 14.15, 13.85, 13.54, 14.24, 14.52, 13.99, 14.28, 13.74, 14.04, 14.47, 13.87, 14.25, 15.42, 13.28, 12.82, 13.84, 13.83, 14.54, 14.63, 13.35, 14.37, 14.63, 14.43]
+DEFAULT_VAR_B = [13.82, 13.33, 11.74, 14.19, 14.84, 14.18, 12.43, 13.69, 12.75, 13.51, 13.7, 13.6, 13.87, 13.02, 14.48, 13.78, 13.29, 13.9, 14.51, 13.21, 13.66, 13.52, 13.45, 12.88, 14.81, 14.82, 12.98, 12.94, 13.37, 15.14]
+
 def index(request):
     context = {}
     return render(request, 'deadahead_app/index.html', context)
@@ -26,8 +29,9 @@ def contact(request):
     return render(request, 'deadahead_app/contact.html', context)
 
 def abtesting(request):    
-    var_1 = request.GET.get('var_1', '1.1,.6,6.8')
-    var_2 = request.GET.get('var_2', '1,2.3,3')
+    var_1 = request.GET.get('var_1', ', '.join(str(x) for x in DEFAULT_VAR_A))
+    var_2 = request.GET.get('var_2', ', '.join(str(x) for x in DEFAULT_VAR_B))
+    
     ttest_equal_var = request.GET.get('ttest_equal_var', 'true')
     num_permutations = request.GET.get('num_permutations', '100')
     form = ABTestForm(initial={'var_1_input': var_1, 'var_2_input': var_2, 'num_permutations': num_permutations, 'ttest_equal_var': ttest_equal_var, })
