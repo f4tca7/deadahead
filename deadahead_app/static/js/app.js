@@ -58,7 +58,7 @@ function calc_stats() {
                     num_perm: json['num_perm'],
                     ttest_p: (json['ttest_p']).toFixed(5),
                     equal_var: equal_var,
-                    chi_sq_p: (json['chi_sq_p']).toFixed(5),
+                   // chi_sq_p: (json['chi_sq_p']).toFixed(5),
                 }); 
                 $("#pPlaceholder").html(templateResult_P);                     
             }
@@ -203,15 +203,15 @@ var p_template = `
                 <td>Welch T-Test, two-sided, independent samples; Equal variance: {{equal_var}}</th>
                 <td>p = {{ttest_p}}</td>
             </tr>
-            <tr>
-                <td>Chi-Squared (0 Delta degrees of freedom)</th>
-                <td>p = {{chi_sq_p}}</td>
-            </tr>    
+  
         </tbody>
     </div>
 </div>
 `
-
+// <tr>
+// <td>Chi-Squared (0 Delta degrees of freedom)</th>
+// <td>p = {{chi_sq_p}}</td>
+// </tr>  
 
 var stat_template = `
 <div class="row">
