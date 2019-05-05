@@ -31,7 +31,7 @@ def contact(request):
 def abtesting(request):    
     var_1 = request.GET.get('var_1', ', '.join(str(x) for x in DEFAULT_VAR_A))
     var_2 = request.GET.get('var_2', ', '.join(str(x) for x in DEFAULT_VAR_B))
-    
+
     ttest_equal_var = request.GET.get('ttest_equal_var', 'true')
     num_permutations = request.GET.get('num_permutations', '100')
     form = ABTestForm(initial={'var_1_input': var_1, 'var_2_input': var_2, 'num_permutations': num_permutations, 'ttest_equal_var': ttest_equal_var, })
@@ -73,6 +73,8 @@ def calc_stats(request):
             if num_permutations_num != None:
                 if num_permutations_num > 5000 :
                     num_permutations_num = 5000
+                if num_permutations < 1:
+                    num_permutations_num = 100
                 hypo_p = calc_bootstrap_hypo_p(var_1_split, var_2_split, num_permutations_num)
                 num_permutations = num_permutations_num
 
