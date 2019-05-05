@@ -161,7 +161,7 @@ $(function() {
 
 var histplot_template = `
 <div class="row">
-    <h4 class="col">Histogram & KDE</h4>
+    <h4 class="col">Histograms</h4>
 </div>
 <div class="row">
     <div class="col">

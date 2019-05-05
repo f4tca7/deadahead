@@ -49,7 +49,7 @@ def plot_hist(data1, data2):
         df = df[['variable', 'value']]
         g = sns.FacetGrid(df, row="variable",
                         height=2.25, aspect=3,)
-        g = g.map(sns.distplot, "value", hist=True, rug=True, color='gray')
+        g = g.map(sns.distplot, "value", hist=True, rug=True, norm_hist=False, kde=False)
         return plot_to_base64_png(g)
     except:
         return ""
