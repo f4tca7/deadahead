@@ -43,13 +43,13 @@ def plot_hist(data1, data2):
         my_dict = dict(variant1 = data1, variant2 = data2) 
         df = pd.DataFrame.from_dict(my_dict, orient='index')
         df = df.transpose()    
-
+        
         df['dummy'] = 'dummy'
         df = df.melt(id_vars=['dummy'])
         df = df[['variable', 'value']]
         g = sns.FacetGrid(df, row="variable",
                         height=2.25, aspect=3,)
-        g = g.map(sns.distplot, "value", hist=True, rug=True)
+        g = g.map(sns.distplot, "value", hist=True, rug=True, color='gray')
         return plot_to_base64_png(g)
     except:
         return ""
