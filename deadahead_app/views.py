@@ -73,7 +73,7 @@ def calc_stats(request):
             if num_permutations_num != None:
                 if num_permutations_num > 5000 :
                     num_permutations_num = 5000
-                if num_permutations < 1:
+                if num_permutations_num < 1:
                     num_permutations_num = 100
                 hypo_p = calc_bootstrap_hypo_p(var_1_split, var_2_split, num_permutations_num)
                 num_permutations = num_permutations_num
