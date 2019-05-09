@@ -4,21 +4,21 @@
   {% block entry-header %}
   <header class="entry-header">
   <small class"row">
-        {% block entry-authors %}
-      {% with authors=object.authors.all %}
-      {% if authors|length %}
-      {% trans "Written by" %}
-      {% for author in authors %}
-      <span class="vcard author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <a href="{{ author.get_absolute_url }}" class="fn url{% if not author.get_full_name %} nickname{% endif %}" rel="author"
-           title="{% blocktrans %}Show all {{ author }}'s entries{% endblocktrans %}" itemprop="url">{{ author }}</a></span>{% if not forloop.last %}, {% endif %}
-      {% endfor %}
-      {% trans "on" context "on date" %}
-      {% else %}
-      {% trans "Written on" context "on date" %}
-      {% endif %}
-      {% endwith %}
-      {% endblock entry-authors %}
+    {% block entry-authors %}
+    {% with authors=object.authors.all %}
+    {% if authors|length %}
+    {% trans "Written by" %}
+    {% for author in authors %}
+    <span class="vcard author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <a href="{{ author.get_absolute_url }}" class="fn url{% if not author.get_full_name %} nickname{% endif %}" rel="author"
+          title="{% blocktrans %}Show all {{ author }}'s entries{% endblocktrans %}" itemprop="url">{{ author }}</a></span>{% if not forloop.last %}, {% endif %}
+    {% endfor %}
+    {% trans "on" context "on date" %}
+    {% else %}
+    {% trans "Written on" context "on date" %}
+    {% endif %}
+    {% endwith %}
+    {% endblock entry-authors %}
     {% block entry-published %}
     
     <time class="published" datetime="{{ object.publication_date|date:"c" }}" itemprop="datePublished">{{ object.publication_date|date:"DATE_FORMAT" }}</time>
