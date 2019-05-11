@@ -11,7 +11,15 @@
         </div>
         <div class="col-sm-6">
             <h1 class="display-4">Drop me a note</h1>
-            <p class="lead">E-Mail: <a href="mailto:toni@tonischmidt.me" target="#">toni@tonischmidt.me</a></p>
+            <p class="lead nav-social-icons">
+                <span>E-Mail: toni@tonischmidt.me</span>
+                <a href="#" target="#" class="enable-copy" 
+                   data-toggle="tooltip" 
+                   title="Copy to clipboard"
+                   data-clipboard-text="toni@tonischmidt.me">
+                <i class="far fa-clipboard"></i>
+                </a>
+            </p>
             <p class="lead">Linkedin: <a href="https://www.linkedin.com/in/tonischmidt/"
                     target="#">https://www.linkedin.com/in/tonischmidt/</a></p>
             <p class="lead">Xing: <a href="https://www.xing.com/profile/Toni_Schmidt8"
@@ -20,3 +28,22 @@
     </div>
 </div>
 {% endblock content %}
+{% block footer_javascript_page %}
+    <script>
+        function copyToClipboard(text, el) {
+            var elOriginalText = el.attr('data-original-title');
+            var msg = 'Copied!';
+            el.attr('data-original-title', msg).tooltip('show');
+            el.attr('data-original-title', elOriginalText);
+        }
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+        new ClipboardJS('.enable-copy');
+        $('.enable-copy').click(function() {
+            var text = $(this).attr('data-clipboard-text');
+            var el = $(this);
+            copyToClipboard(text, el);
+        });
+    </script>
+{% endblock footer_javascript_page %}

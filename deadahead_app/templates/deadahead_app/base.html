@@ -8,6 +8,7 @@
 
 <head>
     <!-- Global site tag (gtag.js) - Google Analytics -->
+    {% if use_ga %}
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108398639-2"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -19,7 +20,7 @@
 
         gtag('config', 'UA-108398639-2');
     </script>
-
+    {% endif %}
     <title>{% block title %}Home {% endblock title %} | Toni Schmidt</title>
     {% block head_favicon %}
     <link rel="icon" type="image/png" href="{{ STATIC_URL }}images/favicon.ico">
@@ -86,8 +87,9 @@
 {% block footer_javascript_site %}
 {% comment %} {% bootstrap_messages %} {% endcomment %}
 <script src="{% static 'js/jquery-3.4.0.min.js' %}"></script>
-<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 <script src="{% static 'js/squirrelly.min.js' %}"></script>
+<script src="{% static 'js/clipboard.min.js' %}"></script>
 <script src="{% static 'js/app.js' %}"></script>
 {% endblock footer_javascript_site %}
 {% block footer_javascript_section %}{% endblock footer_javascript_section %}
