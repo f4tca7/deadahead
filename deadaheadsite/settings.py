@@ -25,7 +25,10 @@ SECRET_KEY = os.environ['APP_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
-# Debug = True
+#Debug = True
+
+USE_GA = os.environ.get('DJANGO_USE_GA', False)
+USE_GA = {'True': True, 'False': False}.get(USE_GA, False)
 
 ALLOWED_HOSTS = ['172.104.51.8', 'tonischmidt.me','127.0.0.1']
 
@@ -82,6 +85,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.request',
                 'zinnia.context_processors.version',  # Optional
+                'deadaheadsite.context_processors.use_ga',
             ],
             'loaders': [
                 'app_namespace.Loader',

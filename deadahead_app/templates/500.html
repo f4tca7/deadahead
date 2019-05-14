@@ -1,0 +1,24 @@
+{% extends 'deadahead_app/base.html' %}
+{% block title %}A/B Testing{% endblock title %}
+{% block nav-style %}mkt-nav{% endblock nav-style %}
+{% load bootstrap4 %}
+{% block content %}  
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="error-template">
+                <h2>
+                    500 Server Error</h2>
+                <div class="error-details">
+                    Sorry, there's been an error and the page could not be loaded.
+                </div>
+                <div class="row">&nbsp;</div>
+                <div class="error-actions">
+                    <a href="/" class="btn btn-outline-dark">
+                        Return To Home </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

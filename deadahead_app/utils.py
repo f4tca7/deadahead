@@ -92,3 +92,13 @@ def split_and_convert(str):
 def calc_summary(arr):
     summary = pd.DataFrame(arr).describe(percentiles=[.05, .25, .5, .75, .95])
     return summary
+
+def calc_min_sample_size(data1, data2):
+    d1_mean = np.mean(data1)
+    d2_mean = np.mean(data2)
+    if (d1_mean > 1) & (d2_mean > 1):
+        d1_mean = d1_mean / 100.0
+        d2_mean = d2_mean / 100.0
+    pooled_var_estimator = d1_mean * (1 - d1_mean) + d2_mean * (1 - d2_mean)
+    n = (pooled_var_estimator / (d1_mean - d2_mean)**2) * (1.96 + 0.8)**2
+    return n

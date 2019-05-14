@@ -18,10 +18,20 @@ from django.urls import include, path, re_path
 from django.conf.urls import url
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic.base import TemplateView
 
 urlpatterns = [
     path('', include('deadahead_app.urls')),
     path('admin/', admin.site.urls),
     url(r'^weblog/', include('zinnia.urls')),
     url(r'^comments/', include('django_comments.urls')),    
+    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += [
+        url(r'^tests/400/$', TemplateView.as_view(template_name='400.html'), name='test404'),
+        url(r'^tests/403/$', TemplateView.as_view(template_name='403.html'), name='test404'),
+        url(r'^tests/404/$', TemplateView.as_view(template_name='404.html'), name='test404'),
+        url(r'^tests/500/$', TemplateView.as_view(template_name='500.html'), name='test404'),
+    ]

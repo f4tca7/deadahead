@@ -5,6 +5,7 @@ from django.views import generic
 from django.utils import timezone
 from django.utils.http import urlencode
 import pandas as pd
+import numpy as np
 import json 
 from .models import ABTestModel
 from .forms import ABTestForm
@@ -14,6 +15,7 @@ from .utils import int_or_else
 from .utils import calc_bootstrap_hypo_p
 from .utils import ttest
 from .utils import chi_sq
+from .utils import calc_min_sample_size
 from .plot_helpers import plot_box_swarm
 from .plot_helpers import plot_hist
 
@@ -79,18 +81,27 @@ def calc_stats(request):
                 num_permutations = num_permutations_num
 
             ttest_p = ttest(var_1_split, var_2_split, False)
-
+            min_sample_size = calc_min_sample_size(var_1_split, var_2_split)
+            chi_squared = chi_sq(var_1_split, var_2_split)
+            if np.isnan(ttest_p):
+                ttest_p = -1
+            if np.isnan(min_sample_size):
+                min_sample_size = -1    
+            if np.isnan(hypo_p):
+                hypo_p = -1        
+            if np.isnan(chi_squared):
+                chi_squared = -1  
             response_data['hypo_p'] = hypo_p
             response_data['num_perm'] = num_permutations
             response_data['ttest_p'] = ttest_p
             response_data['equal_var'] = abtest_request.ttest_equal_var
-            response_data['chi_sq_p'] = chi_sq(var_1_split, var_2_split)
+            response_data['chi_sq_p'] = chi_squared
 
             boxplot_img = plot_box_swarm(var_1_split, var_2_split)
             response_data['boxplot_img'] = boxplot_img
             
             hist_img = plot_hist(var_1_split, var_2_split)                
-            
+            response_data['min_sample_size'] = min_sample_size
             response_data['hist_img'] = hist_img
             return HttpResponse(
                 json.dumps(response_data),
