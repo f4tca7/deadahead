@@ -1,4 +1,5 @@
 function calc_stats() {
+    ga('send', 'event', 'ABT', 'click', 'AB Test Tool Calc Stats');
     $("#abtSubmitButton").hide();
     $("#abtLoadingButton").show();
     $("#boxplotPlaceholder").empty();
@@ -76,6 +77,7 @@ function calc_stats() {
                 });
                 $("#histplotPlaceholder").html(templateResultHistImage);  
             }  
+            
         },
 
         // handle a non-successful response
