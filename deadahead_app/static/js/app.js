@@ -1,5 +1,7 @@
 function calc_stats() {
-    ga('send', 'event', 'ABT', 'click', 'AB Test Tool Calc Stats');
+    if(typeof ga === 'function') {
+        ga('send', 'event', 'ABT', 'click', 'AB Test Tool Calc Stats');
+    }
     $("#abtSubmitButton").hide();
     $("#abtLoadingButton").show();
     $("#boxplotPlaceholder").empty();
