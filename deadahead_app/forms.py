@@ -12,8 +12,8 @@ class ABTestForm(ModelForm):
             'num_permutations': TextInput(attrs={'id': 'num_permutations'}),
         }
         labels = {
-            "var_1_input": "Variant 1 Data",
-            "var_2_input": "Variant 2 Data",
+            "var_1_input": "Control",
+            "var_2_input": "Treatment",
             "num_permutations": "Number of permutations for bootstrap hypothesis test",
             "ttest_equal_var": "For t-test: Equal variance?"
         }

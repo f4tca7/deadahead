@@ -75,7 +75,7 @@ def calc_bootstrap_hypo_p(data_1, data_2, num_rep):
 
 
     # Compute and print the p-value: p
-    p = np.sum(perm_replicates >=  diff_obs) / len(perm_replicates)
+    p = np.sum(perm_replicates <=  diff_obs) / len(perm_replicates)
     return p
 
 

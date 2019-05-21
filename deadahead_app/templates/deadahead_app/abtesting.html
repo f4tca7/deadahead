@@ -36,8 +36,6 @@
                     {% csrf_token %}
                     {% bootstrap_form form %}
                     {% buttons %}
-                    {% comment %} <button type="button" class="btn btn-success" onclick="calc_stats()">Calculate
-                        Summary</button> {% endcomment %}
                     <button type="button" class="btn btn-outline-dark" onclick="calc_stats()"
                         id="abtSubmitButton">Go</button>
                     <button type="button" class="btn btn-outline-dark" style="display: none;" id="abtLoadingButton"><i

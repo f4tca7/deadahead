@@ -21,7 +21,7 @@ def plot_to_base64_png(figure):
 
 def plot_box_swarm(data1, data2):
     try:
-        my_dict = dict(variant1 = data1, variant2 = data2) 
+        my_dict = dict(Control = data1, Treatment = data2) 
         df = pd.DataFrame.from_dict(my_dict, orient='index')    
         df = df.transpose()    
         sns.set_style("whitegrid")
@@ -40,7 +40,7 @@ def plot_box_swarm(data1, data2):
 def plot_hist(data1, data2):    
     #if len(data1) < 2 | len(data2) < 2 :
     try:
-        my_dict = dict(variant1 = data1, variant2 = data2) 
+        my_dict = dict(Control = data1, Treatment = data2) 
         df = pd.DataFrame.from_dict(my_dict, orient='index')
         df = df.transpose()    
         

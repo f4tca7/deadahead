@@ -227,8 +227,8 @@ var stat_template = `
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Variant 1</th>
-                    <th scope="col">Variant 2</th>
+                    <th scope="col">Control</th>
+                    <th scope="col">Treatment</th>
                 </tr>
             </thead>
             <tbody>
