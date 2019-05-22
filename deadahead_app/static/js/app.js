@@ -187,7 +187,7 @@ var boxplot_template = `
 
 var p_template = `
 <div class="row">
-    <h4 class="col">p-values and minumum sample size</h4>
+    <h4 class="col">p-values and minimum sample size</h4>
 </div>
 <div class="row">
     <div class="col">
