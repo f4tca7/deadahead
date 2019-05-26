@@ -1,5 +1,5 @@
 
-from django.forms import ModelForm, Textarea, TextInput, ChoiceField, RadioSelect
+from django.forms import ModelForm, Textarea, TextInput, ChoiceField, RadioSelect, Select
 from .models import ABTestModel, Word2VecModel, Word2VecChoice
 
 class ABTestForm(ModelForm):
@@ -18,14 +18,10 @@ class ABTestForm(ModelForm):
             "ttest_equal_var": "For t-test: Equal variance?"
         }
 
-CHOICES=[('FB_COMMON','Facebook Common Crawl 600B'),
-         ('FB_WIKI','English Wikipedia 2017 16B'),
-         ('GOGGLE_NEWS','Google News 100B'),
-         ('NYT','New York Times Article Snippets 2000 - 2019 '),
-         ]
+
 
 class Word2VecForm(ModelForm):
-    corpus = ChoiceField(choices=CHOICES, widget=RadioSelect(), initial=1)
+    #corpus = ChoiceField(choices=CHOICES, widget=RadioSelect(), initial=1)
 
     class Meta:
         model = Word2VecModel
@@ -33,6 +29,7 @@ class Word2VecForm(ModelForm):
         widgets = {
             'term_1': TextInput(attrs={'id': 'term_1'}),
             'term_2': TextInput(attrs={'id': 'term_2'}),
+            'corpus': RadioSelect(attrs={'id': 'corpus'}),
         }
         labels = {
             "term_1": "Term 1",

@@ -8,28 +8,36 @@
         <div class="jumbotron row">
             <div class="col">
                 <h1 class="display-4">Word2Vec Exploration Tool</h1>
-                <p class="lead">A tool to perform simple Word2Vec actions on a number of corpera.</p>
-                <p class="lead">You can perform distance, similarity, ... actions.</p>
+                <p class="lead">A simple tool to query vectorized text corpora</p>
+                <p class="lead">For the two terms entered it calculates <b>distance</b>, <b>similarity</b> and <b>top 30 most similar tokens</b>.</p>
                 <hr class="my-4">
                 <p>This tool does:</p>
                 <p>
                     <ul>
-                        <li>Plot a combined boxpot and swarmplot of the provided data.</li>
-                        <li>Plot nicely comparable histograms.</li>
-                        <li>Calculate summary statistics.</li>
-                        <li>Run a bootstrap hypothesis test with the specified number of permutations
-                            (as in <a
-                                href="https://faculty.psy.ohio-state.edu/myung/personal/course/826/bootstrap_hypo.pdf"
-                                target="#">this document</a>).</li>
-                        <li>Run a t-test using <a
-                                href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ttest_ind.html"
-                                target="#">scipy.stats.ttest_ind</a>.</li>
-                        <li>Calculate minimum sample size as described <a
-                                href="https://www.invespcro.com/blog/calculating-sample-size-for-an-ab-test/"
-                                target="#">in here</a>.</li>
+                        <li>Compute <b>distance</b> between two tokens.</li>
+                        <li>Compute <b>similarity</b> of two tokens.</li>
+                        <li>Fetch the <b>top 30 most similar</b> tokens.</li>
+                        <li>Queries are performed using <a
+                                href="https://github.com/plasticityai/magnitude"
+                                target="_blank">pymagnitude</a></li>
                     </ul>
                 </p>
-
+                <hr class="my-4">
+                <p>Select from those corpera:</p>
+                <p>
+                    <ul>
+                        <li>Facebook Common Crawl, 600B tokens (for details check <a
+                                href="https://fasttext.cc/docs/en/english-vectors.html"
+                                target="_blank">fasttext</a>).</li>
+                        <li>English Wikipedia 2017, 16B tokens (for details check <a
+                                href="https://fasttext.cc/docs/en/english-vectors.html"
+                                target="_blank">fasttext</a>). </li>
+                        <li>Google News, 100B tokens  (for details check <a
+                                href="https://code.google.com/archive/p/word2vec/"
+                                target="_blank">Google word2vec</a>).</li>
+                        <li>New York Times Article Snippets 2000 - 2019, 79M tokens (extracted myself).</li>
+                    </ul>
+                </p>
             </div>
             <div class="col">
                 <form action="/word2vec/calc_vec/" method="post" id="post-form">
@@ -48,16 +56,12 @@
 
 
         <div class="row">
-            <div class="col-4" id="boxplotPlaceholder">
+            <div class="col-4" id="compPlaceholder">
             </div>
-            <div class="col-8" id="histplotPlaceholder">
+            <div class="col-4" id="nMostSimPlaceholder1">
             </div>
-        </div>
-        <div class="row">
-            <div class="col-6" id="statsPlaceholder">
-            </div>
-            <div class="col-6" id="pPlaceholder">
-            </div>
+            <div class="col-4" id="nMostSimPlaceholder2">
+            </div>            
         </div>
 
     </div>

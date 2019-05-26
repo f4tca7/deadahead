@@ -4,9 +4,9 @@ function calc_word2vec() {
     }
     $("#w2vSubmitButton").hide();
     $("#w2vLoadingButton").show();
-    // $("#boxplotPlaceholder").empty();
-    // $("#histplotPlaceholder").empty();
-    // $("#pPlaceholder").empty();
+    $("#compPlaceholder").empty();
+    $("#nMostSimPlaceholder1").empty();
+    $("#nMostSimPlaceholder2").empty();
     // $("#statsPlaceholder").empty();
     vote: $("[name='vote']:checked").val()
     $.ajax({
@@ -24,7 +24,59 @@ function calc_word2vec() {
             $("#w2vSubmitButton").show();
             
             $('.error-label').remove();
-            // $('#post-text').val(''); // remove the value from the input            
+            n_most_sim_1 = null;
+            n_most_sim_2 = null;
+            similarity = -1;
+            distance = -1;
+            term_1 = ""
+            term_2 = ""
+            topn = ""
+            if(json['term1'] != null) {
+                term_1 = json['term1'];
+            }
+            if(json['term2'] != null) {
+                term_2 = json['term2'];
+            }
+            if(json['topn'] != null) {
+                topn = json['topn'];
+            }
+            if(json['n_most_sim_1'] != null) {
+                n_most_sim_1 = JSON.parse(json['n_most_sim_1'])["data"];
+            }
+            if(json['n_most_sim_2'] != null) {
+                n_most_sim_2 = JSON.parse(json['n_most_sim_2'])["data"];
+            }  
+            if(json['similarity'] != null) {
+                similarity = json['similarity'];
+            } 
+            if(json['distance'] != null) {
+                distance = json['distance'];
+            }
+           
+            var templateResult_Comparison = Sqrl.Render(compared_metrics_template, {
+                term1: term_1,
+                term2: term_2,
+                distance: distance,
+                similarity: similarity
+            }); 
+            $("#compPlaceholder").html(templateResult_Comparison);       
+
+            if(n_most_sim_1 != null) {
+                var templateResult = Sqrl.Render(n_most_sim_template, {
+                    topn: topn,
+                    term: term_1,
+                    n_most_sim: n_most_sim_1
+                });
+                $("#nMostSimPlaceholder1").html(templateResult);                            
+            }                       
+            if(n_most_sim_2 != null) {
+                var templateResult = Sqrl.Render(n_most_sim_template, {
+                    topn: topn,
+                    term: term_2,
+                    n_most_sim: n_most_sim_2
+                });
+                $("#nMostSimPlaceholder2").html(templateResult);                            
+            }                    
         },
 
         // handle a non-successful response
@@ -148,13 +200,6 @@ function calc_stats() {
     });
 };
 
-// Submit post on submit
-// $('#post-form').on('submit', function(event){
-//     event.preventDefault();
-//     console.log("form submitted!")  // sanity check
-//     post_calc();
-// });
-
 $(function() {
 
 
@@ -211,6 +256,71 @@ $(function() {
 
 });
 
+
+var compared_metrics_template = `
+<div class="row">
+    <h4 class="col">Comparison metrics</h4>
+
+</div>
+<div class="row">
+<p class="col">Compared <b>{{term1}}</b> and <b>{{term2}}</b></p>
+</div>
+<div class="row">
+    <div class="col">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col" class="w-75">Metric</th>
+                    <th scope="col" class="w-25">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Distance</th>
+                    <td>{{distance}}</td>
+                </tr>
+                <tr>
+                    <td>Similarity</th>
+                    <td>{{similarity}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+`
+var n_most_sim_template = `
+<div class="row">
+    <h4 class="col">Most similar</h4>
+</div>
+<div class="row">
+<p class="col">Top <b>{{topn}}</b> most similar to <b>{{term}}</b></p>
+</div>
+<div class="row">
+    <div class="col">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Word</th>
+                    <th scope="col">Similarity</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{each(options.n_most_sim)}}
+                <tr>
+                    {{js(options.word = options.n_most_sim[@index][0])/}}
+                    {{js(options.similarity = options.n_most_sim[@index][1])/}}
+
+                    <td>{{word}}</td>
+                    <td>{{similarity}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+`
+
+
 var histplot_template = `
 <div class="row">
     <h4 class="col">Histograms</h4>
@@ -264,10 +374,6 @@ var p_template = `
     </div>
 </div>
 `
-// <tr>
-// <td>Chi-Squared (0 Delta degrees of freedom)</th>
-// <td>p = {{chi_sq_p}}</td>
-// </tr>  
 
 var stat_template = `
 <div class="row">

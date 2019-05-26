@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
@@ -59,20 +59,17 @@ def calc_word2vec(request):
         if form.is_valid():
             word2vec_request = form.save(commit=False)
             response_data = {}
+            topn = 30
+            dist, sim, n_most_sim_1, n_most_sim_2 = analyze_w2v(word2vec_request.corpus, word2vec_request.term_1, word2vec_request.term_2, topn)
+            response_data['term1'] = word2vec_request.term_1
+            response_data['term2'] = word2vec_request.term_2
+            response_data['distance'] = str(dist)
+            response_data['similarity'] = str(sim)            
+            response_data['topn'] = str(topn)  
+            response_data['n_most_sim_1'] = pd.DataFrame(n_most_sim_1).to_json(orient='split')
+            response_data['n_most_sim_2'] = pd.DataFrame(n_most_sim_2).to_json(orient='split')
 
-            dist, sim, n_most_sim_1, n_most_sim_2 = analyze_w2v(word2vec_request.corpus, word2vec_request.term_1, word2vec_request.term_2)
-            response_data['dist'] = dist
-            response_data['sim'] = sim
-            print(dict(n_most_sim_1))
-            response_data['n_most_sim_1'] = json.dumps(dict(n_most_sim_1), cls=DjangoJSONEncoder)
-            response_data['n_most_sim_2'] = json.dumps(dict(n_most_sim_2), cls=DjangoJSONEncoder)
-            # response_data['n_most_sim_1'] = pd.DataFrame(n_most_sim_1).to_json(orient='split')
-            # response_data['n_most_sim_2'] = pd.DataFrame(n_most_sim_2).to_json(orient='split')
-
-            return HttpResponse(
-                json.dumps(response_data),
-                content_type="application/json"
-            )            
+            return JsonResponse(response_data)
         else:
             errors = form.errors
             
