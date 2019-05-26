@@ -3,6 +3,8 @@ function calc_word2vec() {
         ga('send', 'event', 'ABT', 'click', 'AB Test Tool Calc Stats');
     }
     $("#w2vSubmitButton").hide();
+    $("#scrollNudge").hide();
+    
     $("#w2vLoadingButton").show();
     $("#compPlaceholder").empty();
     $("#nMostSimPlaceholder1").empty();
@@ -22,7 +24,8 @@ function calc_word2vec() {
         success : function(json) {
             $("#w2vLoadingButton").hide();
             $("#w2vSubmitButton").show();
-            
+            $("#scrollNudge").show();
+
             $('.error-label').remove();
             n_most_sim_1 = null;
             n_most_sim_2 = null;
@@ -108,6 +111,7 @@ function calc_stats() {
     $("#histplotPlaceholder").empty();
     $("#pPlaceholder").empty();
     $("#statsPlaceholder").empty();
+    $("#scrollNudge").hide();
     ttest_equal_var = false;
     if ($('#id_ttest_equal_var').is(":checked"))
     {
@@ -127,7 +131,7 @@ function calc_stats() {
         success : function(json) {
             $("#abtLoadingButton").hide();
             $("#abtSubmitButton").show();
-            
+            $("#scrollNudge").show();
             $('.error-label').remove();
             // $('#post-text').val(''); // remove the value from the input
             $('#var_1_input').val(json['var_1']);
@@ -259,11 +263,11 @@ $(function() {
 
 var compared_metrics_template = `
 <div class="row">
-    <h4 class="col">Comparison metrics</h4>
+    <h4 class="col">Comparison</h4>
 
 </div>
 <div class="row">
-<p class="col">Compared <b>{{term1}}</b> and <b>{{term2}}</b></p>
+<p class="col"><b>{{term1}}</b> compared to <b>{{term2}}</b></p>
 </div>
 <div class="row">
     <div class="col">
@@ -290,17 +294,17 @@ var compared_metrics_template = `
 `
 var n_most_sim_template = `
 <div class="row">
-    <h4 class="col">Most similar</h4>
+    <h4 class="col">{{topn}} most similar</h4>
 </div>
 <div class="row">
-<p class="col">Top <b>{{topn}}</b> most similar to <b>{{term}}</b></p>
+<p class="col">Top <b>{{topn}}</b> tokens most similar to <b>{{term}}</b></p>
 </div>
 <div class="row">
     <div class="col">
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Word</th>
+                    <th scope="col">Token</th>
                     <th scope="col">Similarity</th>
                 </tr>
             </thead>
