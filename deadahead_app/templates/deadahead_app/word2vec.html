@@ -1,0 +1,65 @@
+{% extends 'deadahead_app/base.html' %}
+{% block title %}Word2Vec Tool{% endblock title %}
+{% block nav-style %}mkt-nav{% endblock nav-style %}
+{% load bootstrap4 %}
+{% block content %}
+<div class="mkt-s1">
+    <div class="mkt-s1-body container ">
+        <div class="jumbotron row">
+            <div class="col">
+                <h1 class="display-4">Word2Vec Exploration Tool</h1>
+                <p class="lead">A tool to perform simple Word2Vec actions on a number of corpera.</p>
+                <p class="lead">You can perform distance, similarity, ... actions.</p>
+                <hr class="my-4">
+                <p>This tool does:</p>
+                <p>
+                    <ul>
+                        <li>Plot a combined boxpot and swarmplot of the provided data.</li>
+                        <li>Plot nicely comparable histograms.</li>
+                        <li>Calculate summary statistics.</li>
+                        <li>Run a bootstrap hypothesis test with the specified number of permutations
+                            (as in <a
+                                href="https://faculty.psy.ohio-state.edu/myung/personal/course/826/bootstrap_hypo.pdf"
+                                target="#">this document</a>).</li>
+                        <li>Run a t-test using <a
+                                href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ttest_ind.html"
+                                target="#">scipy.stats.ttest_ind</a>.</li>
+                        <li>Calculate minimum sample size as described <a
+                                href="https://www.invespcro.com/blog/calculating-sample-size-for-an-ab-test/"
+                                target="#">in here</a>.</li>
+                    </ul>
+                </p>
+
+            </div>
+            <div class="col">
+                <form action="/word2vec/calc_vec/" method="post" id="post-form">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    {% buttons %}
+                    <button type="button" class="btn btn-outline-dark" onclick="calc_word2vec()"
+                        id="w2vSubmitButton">Go</button>
+                    <button type="button" class="btn btn-outline-dark" style="display: none;" id="w2vLoadingButton"><i
+                            class="fa fa-spinner fa-spin"></i></button>
+                    {% endbuttons %}
+                    <div id="results"></div> <!-- errors go here -->
+                </form>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-4" id="boxplotPlaceholder">
+            </div>
+            <div class="col-8" id="histplotPlaceholder">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6" id="statsPlaceholder">
+            </div>
+            <div class="col-6" id="pPlaceholder">
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock content %}

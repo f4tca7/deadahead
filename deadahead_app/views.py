@@ -4,11 +4,12 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from django.utils.http import urlencode
+from django.core.serializers.json import DjangoJSONEncoder 
 import pandas as pd
 import numpy as np
 import json 
-from .models import ABTestModel
-from .forms import ABTestForm
+from .models import ABTestModel, Word2VecModel, Word2VecChoice
+from .forms import ABTestForm, Word2VecForm
 from .utils import split_and_convert
 from .utils import calc_summary
 from .utils import int_or_else
@@ -18,9 +19,19 @@ from .utils import chi_sq
 from .utils import calc_min_sample_size
 from .plot_helpers import plot_box_swarm
 from .plot_helpers import plot_hist
+from .pymag_utils import analyze_w2v
 
 DEFAULT_VAR_B = [13.71, 14.57, 12.07, 14.41, 15.11, 14.5, 14.21, 14.15, 13.85, 13.54, 14.24, 14.52, 13.99, 14.28, 13.74, 14.04, 14.47, 13.87, 14.25, 15.42, 13.28, 12.82, 13.84, 13.83, 14.54, 14.63, 13.35, 14.37, 14.63, 14.43]
 DEFAULT_VAR_A = [13.82, 13.33, 11.74, 14.19, 14.84, 14.18, 12.43, 13.69, 12.75, 13.51, 13.7, 13.6, 13.87, 13.02, 14.48, 13.78, 13.29, 13.9, 14.51, 13.21, 13.66, 13.52, 13.45, 12.88, 14.81, 14.82, 12.98, 12.94, 13.37, 15.14]
+
+class DecimalEncoder(json.JSONEncoder):
+    def _iterencode(self, o, markers=None):
+        if isinstance(o, decimal.Decimal):
+            # wanted a simple yield str(o) in the next line,
+            # but that would mean a yield on the line with super(...),
+            # which wouldn't work (see my comment below), so...
+            return (str(o) for o in [o])
+        return super(DecimalEncoder, self)._iterencode(o, markers)
 
 def index(request):
     context = {}
@@ -29,6 +40,53 @@ def index(request):
 def contact(request):
     context = {}
     return render(request, 'deadahead_app/contact.html', context)
+
+def myconverter(o):
+    if isinstance(o, float):
+        return o.__str__()
+
+def word2vec(request):
+    term_1_default = "germany"
+    term_2_default = "france"
+    corpus_default = Word2VecChoice.N_MOST_SIM
+    #form = Word2VecForm(initial={'term_1': term_1_default, 'term_2': term_2_default, 'analysis_type': analysis_type, })
+    form = Word2VecForm(initial = {'term_1': term_1_default, 'term_2': term_2_default, 'corpus': 'FB_COMMON' })
+    return render(request, 'deadahead_app/word2vec.html', {'form': form})
+     
+def calc_word2vec(request):
+    if request.method == 'POST':
+        form = Word2VecForm(request.POST)
+        if form.is_valid():
+            word2vec_request = form.save(commit=False)
+            response_data = {}
+
+            dist, sim, n_most_sim_1, n_most_sim_2 = analyze_w2v(word2vec_request.corpus, word2vec_request.term_1, word2vec_request.term_2)
+            response_data['dist'] = dist
+            response_data['sim'] = sim
+            print(dict(n_most_sim_1))
+            response_data['n_most_sim_1'] = json.dumps(dict(n_most_sim_1), cls=DjangoJSONEncoder)
+            response_data['n_most_sim_2'] = json.dumps(dict(n_most_sim_2), cls=DjangoJSONEncoder)
+            # response_data['n_most_sim_1'] = pd.DataFrame(n_most_sim_1).to_json(orient='split')
+            # response_data['n_most_sim_2'] = pd.DataFrame(n_most_sim_2).to_json(orient='split')
+
+            return HttpResponse(
+                json.dumps(response_data),
+                content_type="application/json"
+            )            
+        else:
+            errors = form.errors
+            
+            return HttpResponse(
+                json.dumps(errors),
+                content_type="application/json",
+                status=500
+            )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+
 
 def abtesting(request):    
     var_1 = request.GET.get('var_1', ', '.join(str(x) for x in DEFAULT_VAR_A))

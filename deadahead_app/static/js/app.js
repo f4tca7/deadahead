@@ -1,3 +1,51 @@
+function calc_word2vec() {
+    if(typeof ga === 'function') {
+        ga('send', 'event', 'ABT', 'click', 'AB Test Tool Calc Stats');
+    }
+    $("#w2vSubmitButton").hide();
+    $("#w2vLoadingButton").show();
+    // $("#boxplotPlaceholder").empty();
+    // $("#histplotPlaceholder").empty();
+    // $("#pPlaceholder").empty();
+    // $("#statsPlaceholder").empty();
+    vote: $("[name='vote']:checked").val()
+    $.ajax({
+        url : "calc_word2vec/", // the endpoint
+        type : "POST", // http method
+        data : { 
+            term_1 : $('#term_1').val(),
+            term_2 : $('#term_2').val(),
+            corpus : $("[name='corpus']:checked").val(),
+        }, // data sent with the post request
+
+        // handle a successful response
+        success : function(json) {
+            $("#w2vLoadingButton").hide();
+            $("#w2vSubmitButton").show();
+            
+            $('.error-label').remove();
+            // $('#post-text').val(''); // remove the value from the input            
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            $("#w2vLoadingButton").hide();
+            $("#w2vSubmitButton").show();
+            $('.error-label').remove();
+            var tmpData = JSON.parse(xhr.responseText);
+            var formattedJson = JSON.stringify(tmpData, null, '\t');
+            console.log(tmpData);
+            for(var index in tmpData) {                
+                if($("#" + index).length != 0) {
+                    console.log(index + " : " + tmpData[index] + 'bb');
+                    $("#" + index).after('<small class="error-label red-color">' + tmpData[index] + '</small>');
+                }
+            }
+        }
+    });
+};
+
+
 function calc_stats() {
     if(typeof ga === 'function') {
         ga('send', 'event', 'ABT', 'click', 'AB Test Tool Calc Stats');

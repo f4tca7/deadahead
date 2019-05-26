@@ -32,3 +32,7 @@ article a:hover {
 .nav-social-icons a:hover {
     color: rgba(0,0,0,.7);
 }
+
+.radio label{
+    width: 100%;
+}
