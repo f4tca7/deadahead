@@ -164,6 +164,7 @@ function calc_stats() {
                     hypo_p: (json['hypo_p']).toFixed(5),
                     num_perm: json['num_perm'],
                     ttest_p: (json['ttest_p']).toFixed(5),
+                    ttest_1samp_p: (json['ttest_1samp_p']).toFixed(5),
                     min_sample_size: (json['min_sample_size']).toFixed(0),
                     equal_var: equal_var,
                    // chi_sq_p: (json['chi_sq_p']).toFixed(5),
@@ -370,6 +371,10 @@ var p_template = `
                 <td>Welch T-Test, two-sided, independent samples; Equal variance: {{equal_var}}</th>
                 <td>p = {{ttest_p}}</td>
             </tr>
+            <tr>
+            <td>1-sample T-Test, one-sided</th>
+                <td>p = {{ttest_1samp_p}}</td>
+            </tr>            
             <tr>
                 <td>Minimum sample size for &alpha; = 0.05, &beta; = 0.8</th>
                 <td>n = {{min_sample_size}}</td>

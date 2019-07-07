@@ -10,10 +10,19 @@ def chi_sq(data1, data2):
     return p_val
 
 def ttest(data1, data2, equal_var):
-
     if (len(data1) < 2) | (len(data2) < 2) :
         return -1
     t_stat, p_val = stats.ttest_ind(data1, data2, equal_var = equal_var)
+    return p_val
+
+def ttest_1samp(data1, data2):
+    if (len(data1) < 2) | (len(data2) < 2) :
+        return -1
+    if len(data1) != len(data2) :
+        return -1  
+
+    data_1samp = np.subtract(data1, data2)
+    t_stat, p_val = stats.ttest_1samp(data_1samp, 0)
     return p_val
 
 def int_or_else(value, else_value=None):

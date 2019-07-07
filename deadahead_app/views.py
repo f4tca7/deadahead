@@ -15,6 +15,7 @@ from .utils import calc_summary
 from .utils import int_or_else
 from .utils import calc_bootstrap_hypo_p
 from .utils import ttest
+from .utils import ttest_1samp
 from .utils import chi_sq
 from .utils import calc_min_sample_size
 from .plot_helpers import plot_box_swarm
@@ -128,13 +129,13 @@ def calc_stats(request):
             hypo_p = 0.0
             num_permutations_num = int_or_else(num_permutations)
             if num_permutations_num != None:
-                if num_permutations_num > 5000 :
-                    num_permutations_num = 5000
+                if num_permutations_num > 10000 :
+                    num_permutations_num = 10000
                 if num_permutations_num < 1:
                     num_permutations_num = 100
                 hypo_p = calc_bootstrap_hypo_p(var_1_split, var_2_split, num_permutations_num)
                 num_permutations = num_permutations_num
-
+            ttest_1samp_p = ttest_1samp(var_1_split, var_2_split)
             ttest_p = ttest(var_1_split, var_2_split, False)
             min_sample_size = calc_min_sample_size(var_1_split, var_2_split)
             chi_squared = chi_sq(var_1_split, var_2_split)
@@ -151,13 +152,14 @@ def calc_stats(request):
             response_data['ttest_p'] = ttest_p
             response_data['equal_var'] = abtest_request.ttest_equal_var
             response_data['chi_sq_p'] = chi_squared
-
+            response_data['ttest_1samp_p'] = ttest_1samp_p
             boxplot_img = plot_box_swarm(var_1_split, var_2_split)
             response_data['boxplot_img'] = boxplot_img
             
             hist_img = plot_hist(var_1_split, var_2_split)                
             response_data['min_sample_size'] = min_sample_size
             response_data['hist_img'] = hist_img
+            print("READY FOR RESPONSE")
             return HttpResponse(
                 json.dumps(response_data),
                 content_type="application/json"
