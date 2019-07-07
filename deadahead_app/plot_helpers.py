@@ -9,7 +9,6 @@ import io
 import base64
 
 def plot_to_base64_png(figure):
-    # print("PLOT START")
     buf = None
     image_data = ""
     buf = io.BytesIO()
@@ -29,17 +28,12 @@ def plot_box_swarm(data1, data2):
         df = df.transpose()    
         sns.set_style("whitegrid")
         sns.set_context("paper")
-        print("TEST0")
         box_swarm_fig, box_swarm_ax = plt.subplots()
-        print("TEST1")
         ax = sns.boxplot(orient="v", data=df, color='white')
-        print("TEST2")
         if len(data1) < 200:
             ax = sns.swarmplot( data=df, color=".25")
-        print("TEST3")    
         box_swarm_fig.set_figheight(5)
         box_swarm_fig.set_figwidth(3)
-        print("TEST4")
         return plot_to_base64_png(box_swarm_fig)
     except:
         return ""
