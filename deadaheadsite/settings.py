@@ -30,7 +30,7 @@ DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 USE_GA = os.environ.get('DJANGO_USE_GA', False)
 USE_GA = {'True': True, 'False': False}.get(USE_GA, False)
 
-ALLOWED_HOSTS = ['172.104.51.8', 'tonischmidt.me','127.0.0.1']
+ALLOWED_HOSTS = ['172.104.51.8', 'tonischmidt.me','127.0.0.1', 'localhost']
 
 
 # Application definition
