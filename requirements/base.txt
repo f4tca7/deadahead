@@ -24,3 +24,4 @@ pep8==1.7.1
 pyflakes==2.1.1
 coverage==4.5.3
 pymagnitude==0.1.120
+annoy==1.16.3

@@ -1,7 +1,7 @@
 # Import the necessary libraries
 import matplotlib
-matplotlib.use("TkAgg")
-from matplotlib import pyplot as plt
+#matplotlib.use("TkAgg")
+import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 import pandas as pd
